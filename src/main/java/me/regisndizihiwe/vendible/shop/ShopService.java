@@ -3,6 +3,7 @@ package me.regisndizihiwe.vendible.shop;
 import me.regisndizihiwe.vendible.VendibleApplication;
 import me.regisndizihiwe.vendible.interfaces.Location;
 import me.regisndizihiwe.vendible.interfaces.VendibleResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -12,23 +13,18 @@ import java.util.List;
 
 @Component
 public class ShopService {
+
+
+    @Autowired
+    private  final ShopRepository shopRepository;
+
+    public ShopService(ShopRepository shopRepository) {
+        this.shopRepository = shopRepository;
+    }
+
+
     public VendibleResponse<List<Shop>> getAllShops() {
-        List<Shop> allShops = List.of(
-                new Shop("ABC Shop",
-                        new Location(
-                                -2.081383,
-                                30.685868,
-                                "Muhoza",
-                                "Musanze",
-                                "Rusagara",
-                                "Mpenge"),
-                        "abcshop@gmail.com",
-                        "MUKEZA Davina",
-                        "mukezad@gmail.com",
-                        "pass@word",
-                        false,
-                        LocalDate.of(2024, 12, 16)
-                ));
+        List<Shop> allShops = shopRepository.findAll();
 
         return new VendibleResponse<List<Shop>>(
                 HttpStatus.OK,
@@ -36,7 +32,15 @@ public class ShopService {
                 true,
                 allShops
         );
+    }
 
-
+    public  VendibleResponse<Shop> createShop(Shop shop){
+        Shop shop1 =  shopRepository.save(shop);
+        return new VendibleResponse<Shop>(
+                HttpStatus.CREATED,
+                "Shop created",
+                true,
+                shop1
+        );
     }
 }

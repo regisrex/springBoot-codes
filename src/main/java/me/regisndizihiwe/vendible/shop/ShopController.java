@@ -3,9 +3,8 @@ package me.regisndizihiwe.vendible.shop;
 
 import me.regisndizihiwe.vendible.interfaces.VendibleResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,4 +25,10 @@ public class ShopController {
         return shopService.getAllShops();
     }
 
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public  VendibleResponse<Shop> createShop( @RequestBody Shop shop){
+        return shopService.createShop(shop);
+    }
 }

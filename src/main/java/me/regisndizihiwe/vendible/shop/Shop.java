@@ -1,5 +1,6 @@
 package me.regisndizihiwe.vendible.shop;
 
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -8,41 +9,39 @@ import me.regisndizihiwe.vendible.interfaces.Location;
 import java.time.LocalDate;
 
 
+@Getter
+@Entity
 public class Shop {
-    @Getter
+
+    @Id
+    @GeneratedValue(strategy =  GenerationType.UUID)
     private String id;
 
-    @Getter
     @Setter
     private String name;
 
-    @Getter
     @Setter
+    @OneToOne
     private Location location;
 
-    @Getter
     @Setter
     private String email;
 
-    @Getter
     @Setter
     private String ownerName;
 
-    @Getter
     @Setter
     private String ownerEmail;
 
-    @Getter
     @Setter
     private String password;
 
-    @Getter
     @Setter
     private boolean isPromoted;
 
-    @Getter
     @Setter
     private LocalDate promotionEndDate;
+
 
     public Shop(String name, Location location, String email, String ownerName, String ownerEmail, String password, boolean isPromoted, LocalDate promotionEndDate) {
         this.name = name;
@@ -55,4 +54,7 @@ public class Shop {
         this.promotionEndDate = promotionEndDate;
     }
 
+    public Shop() {
+
+    }
 }
